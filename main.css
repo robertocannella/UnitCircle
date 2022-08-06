@@ -1,0 +1,12 @@
+svg {
+ 
+    background-color: antiquewhite;
+    border: 2px;
+}
+#canvas {
+    text-align: center;
+}
+
+.x-axis {
+    font-weight: bold;
+}
