@@ -10,3 +10,18 @@ svg {
 .x-axis {
     font-weight: bold;
 }
+
+.ray {
+    stroke: green;
+}
+.sine {
+    stroke: red;
+}
+.cosine {
+    stroke: red;
+}
+.ray-point {
+    cursor: pointer;
+    stroke: green;
+    fill: green;
+}
