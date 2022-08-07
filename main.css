@@ -18,10 +18,15 @@ svg {
     stroke: red;
 }
 .cosine {
-    stroke: red;
+    stroke: blue;
 }
 .ray-point {
     cursor: pointer;
     stroke: green;
     fill: green;
+}
+.test-point {
+    cursor: pointer;
+    stroke: grey;
+    fill: grey;
 }

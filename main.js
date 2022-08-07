@@ -1,8 +1,23 @@
-const map = (value, inputStart, inputEnd, outputStart, outputEnd) => {
+const map = (value, inputEnd, outputEnd) => {
 
     return ((value * outputEnd) / inputEnd)
     return (value - x1) * (y2 - x2) / (y1 - x1) + x2;
 }
+
+const dragCircle = d3.drag()
+    .on('start', function () {
+        d3.select(this).raise();
+        d3.select(this).attr('cursor', 'move');
+    })
+    .on('drag', function (event) {
+        // Move point
+        d3.select(this).attr('cx', event.x);
+        d3.select(this).attr('cy', event.y);
+
+    })
+    .on('end', function (d, i, nodes) {
+        d3.select(this).attr('cursor', 'auto')
+    })
 
 
 const dragRay = d3.drag()
@@ -20,19 +35,27 @@ const dragRay = d3.drag()
             [event.x, height / 2],
             [event.x, event.y]
         ];
-        const pathOfLine = Gen(hypotenuse);
-        const sinLine = Gen(sine)
-        d3.select('.sine')
-            .attr('d', sinLine)
+        const cosine = [
+            [event.x, event.y],
+            [height / 2, event.y]
+        ];
 
+        const pathOfLine = Gen(hypotenuse);
+        const sinLine = Gen(sine);
+        const cosineLine = Gen(cosine);
+        d3.select('.sine')
+            .attr('d', sinLine);
+        d3.select('.cosine')
+            .attr('d', cosineLine);
         d3.select('.ray')
-            .attr('d', pathOfLine)
+            .attr('d', pathOfLine);
 
 
         // Move point
         d3.select(this).attr('cx', event.x);
         d3.select(this).attr('cy', event.y);
-
+        d3.select('.test-point').attr('cx', )
+        d3.select('.test-point').attr('cy', )
     })
     .on('end', function (d, i, nodes) {
         d3.select('.ray').attr('cursor', 'auto')
@@ -45,8 +68,8 @@ const marginX = 50;
 const marginY = 50;
 const originX = height / 2;
 const originY = width / 2;
-let currentX = Math.PI / 2;
-let currentY = Math.PI / 2;
+let currentX = (Math.sqrt(2) / 2);
+let currentY = (Math.sqrt(2) / 2);
 
 // Set Scales
 const xPosScale = d3.scaleLinear()
@@ -106,10 +129,8 @@ svg.append("g")
 // Create the Ray
 // Making a line Generator
 
-
-
-const mappedX = map(currentX, 0, Math.PI * 2, 0, width);
-const mappedY = map(currentY, 0, Math.PI * 2, 0, height)
+const mappedX = map(currentX, 1, width / 2);
+const mappedY = map(currentY, 1, height / 2);
 const Gen = d3.line();
 
 
@@ -122,12 +143,22 @@ const sine = [
     [mappedX, height / 2],
     [mappedX, mappedY]
 ];
+
+const cosine = [
+    [mappedX, mappedY],
+    [height / 2, mappedY]
+];
 const pathOfLine = Gen(hypotenuse);
-const sinLine = Gen(sine)
+const sinLine = Gen(sine);
+const cosineLine = Gen(cosine);
 
 svg.append('path')
     .attr('d', sinLine)
     .attr('class', 'sine')
+
+svg.append('path')
+    .attr('d', cosineLine)
+    .attr('class', 'cosine')
 
 svg.append('path')
     .attr('d', pathOfLine)
@@ -138,4 +169,27 @@ svg.append('circle')
     .attr('cx', mappedX)
     .attr('r', 4)
     .attr('cy', mappedY)
+    .on('click', (event) => {
+        console.log(map(event.x, width / 2 - 1, 1))
+    })
     .call(dragRay)
+
+svg.append('circle')
+    .attr('class', 'unit-circle')
+    .attr('cx', originX)
+    .attr('cy', originY)
+    .attr('fill', 'none')
+    .attr('stroke', 'grey')
+    .attr('stroke-width', 2)
+    .attr('r', () => {
+        return map(1 /* Value */, 2 /* Input End */, width / 2 /** Output End */)
+    })
+svg.append('circle')
+    .attr('class', 'test-point')
+    .attr('cx', mappedX)
+    .attr('r', 4)
+    .attr('cy', mappedY)
+    .on('click', (event) => {
+        console.log(map(event.x, width / 2 - 1, 1))
+    })
+    .call(dragCircle)
