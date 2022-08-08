@@ -54,8 +54,8 @@ const dragRay = d3.drag()
         // Move point
         d3.select(this).attr('cx', event.x);
         d3.select(this).attr('cy', event.y);
-        d3.select('.test-point').attr('cx', )
-        d3.select('.test-point').attr('cy', )
+        d3.select('.test-point').attr('cx',)
+        d3.select('.test-point').attr('cy',)
     })
     .on('end', function (d, i, nodes) {
         d3.select('.ray').attr('cursor', 'auto')
