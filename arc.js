@@ -8,15 +8,15 @@ const height = 375;
 const width = 375;
 const marginX = 24;
 const marginY = 24;
-const originX = height / 2;
-const originY = width / 2;
+const originX = HEIGHT / 2;
+const originY = WIDTH / 2;
 
 
 
 let currentQuadrant = 1;
-let currentX = scale(Math.sqrt(2), marginX, width - marginX, -1.5, 1.5);
-let currentY = scale(2, marginY, height - marginY, 1.5, -1.5);
-let radius = scale(1, -1.5, 1.5, 0, width / 2 - marginX)
+let currentX = scale(Math.sqrt(2), MARGIN_X, WIDTH - MARGIN_X, -1.5, 1.5);
+let currentY = scale(2, MARGIN_Y, HEIGHT - MARGIN_Y, 1.5, -1.5);
+let radius = scale(1, -1.5, 1.5, 0, WIDTH / 2 - MARGIN_X)
 let initial = 0
 let startAngle = (Math.PI * initial / 180) - Math.PI * 2
 let endAngle = Math.atan(currentY / currentX) - Math.PI * 2
@@ -30,8 +30,8 @@ const dragCircle = d3.drag()
     })
     .on('drag', function (event) {
         // Get new coordinates here and scale to chart
-        const newX = scale(event.x, marginX, width - marginX, -1.5, 1.5);
-        const newY = scale(event.y, marginY, height - marginY, 1.5, -1.5);
+        const newX = scale(event.x, MARGIN_X, WIDTH - MARGIN_X, -1.5, 1.5);
+        const newY = scale(event.y, MARGIN_Y, HEIGHT - MARGIN_Y, 1.5, -1.5);
 
         // Set the new angle depending of the quadrant
         let endAngle = - Math.atan(newY / newX) - Math.PI * 2
@@ -63,12 +63,12 @@ const dragCircle = d3.drag()
         d3.select('.arc-path')
             .datum(arc)
             .attr('d', (d) => { return d })
-            .attr('transform', `translate(${originX},${originY}) rotate(${90})`)
+            .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y}) rotate(${90})`)
 
         // Move Point
         d3.select(this).attr('cx', () => - radius * Math.cos(endAngle));
         d3.select(this).attr('cy', () => - radius * Math.sin(endAngle))
-            .attr('transform', `translate(${originX},${originY}) rotate(180)`)
+            .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y}) rotate(180)`)
 
         // Animate Trig Functions Here
         // Move Ray
@@ -112,16 +112,16 @@ const dragCircle = d3.drag()
 // Set Scales
 const xPosScale = d3.scaleLinear()
     .domain([-1.5, 1.5])
-    .range([width / 2, width - marginX])
+    .range([WIDTH / 2, WIDTH - MARGIN_X])
 const xNegScale = d3.scaleLinear()
     .domain([1.5, -1.5])
-    .range([marginX, width / 2])
+    .range([MARGIN_X, WIDTH / 2])
 const yPosScale = d3.scaleLinear()
     .domain([-1.5, 1.5])
-    .range([height / 2, marginY])
+    .range([HEIGHT / 2, MARGIN_Y])
 const yNegScale = d3.scaleLinear()
     .domain([-1.5, 1.5])
-    .range([height / 2, height - marginY])
+    .range([HEIGHT / 2, HEIGHT - MARGIN_Y])
 
 // Configure Axes
 // Here we need an positive and negative for each axis
@@ -139,28 +139,28 @@ const yNegAxis = d3.axisLeft(yNegScale)
     .tickFormat((d, i) => ['3\u03c0 / 2'][i]);
 // append svg
 const svg = d3.select('#canvas')
-    .append('svg').attr('width', width).attr('height', height);
+    .append('svg').attr('width', WIDTH).attr('height', HEIGHT);
 
 // append axes
 svg.append("g")
     .attr('class', 'x-positive-axis')
     // align the axis to the middle of the canvas
-    .attr("transform", `translate(0,${height / 2})`)
+    .attr("transform", `translate(0,${HEIGHT / 2})`)
     .call(xPosAxis);
 svg.append("g")
     .attr('class', 'x-negative-axis')
     // align the axis to the middle of the canvas
-    .attr("transform", `translate(0,${height / 2})`)
+    .attr("transform", `translate(0,${HEIGHT / 2})`)
     .call(xNegAxis);
 svg.append("g")
     .attr('class', 'y-positive-axis')
     // align the axis to the middle of the canvas
-    .attr("transform", `translate(${width / 2},0)`)
+    .attr("transform", `translate(${WIDTH / 2},0)`)
     .call(yPosAxis);
 svg.append("g")
     .attr('class', 'y-negative-axis')
     // align the axis to the middle of the canvas
-    .attr("transform", `translate(${width / 2},0)`)
+    .attr("transform", `translate(${WIDTH / 2},0)`)
     .call(yNegAxis);
 
 
@@ -173,7 +173,7 @@ const arc = d3.arc()
 svg.append('path')
     .datum(arc)
     .attr('d', (d) => { return d })
-    .attr('transform', `translate(${originX},${originY}) rotate(90)`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y}) rotate(90)`)
     .attr('fill', 'none')
     .attr('class', 'arc-path')
     .attr('stroke', 'green')
@@ -186,7 +186,7 @@ svg.append('path')
 
 const mappedX = radius * Math.cos(endAngle)
 const mappedY = radius * Math.sin(endAngle)
-const tangent =  Math.tan(endAngle)
+const tangent = Math.tan(endAngle)
 console.log(tangent)
 const Gen = d3.line();
 
@@ -222,23 +222,23 @@ const tanLine = Gen(tan)
 svg.append('path')
     .attr('d', sinLine)
     .attr('class', 'sine')
-    .attr('transform', `translate(${originX},${originY})`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y})`)
 svg.append('path')
     .attr('d', cosineLine)
     .attr('class', 'cosine')
-    .attr('transform', `translate(${originX},${originY})`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y})`)
 svg.append('path')
     .attr('d', tanLine)
     .attr('class', 'tangent')
-    .attr('transform', `translate(${originX},${originY})`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y})`)
 svg.append('path')
     .attr('d', pathOfLine)
     .attr('class', 'ray')
-    .attr('transform', `translate(${originX},${originY})`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y})`)
 svg.append('path')
     .attr('d', initialRayLine)
     .attr('class', 'ray')
-    .attr('transform', `translate(${originX},${originY})`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y})`)
 
 // This is the full circle
 
@@ -251,7 +251,7 @@ const fullArc = d3.arc()
 svg.append('path')
     .datum(fullArc)
     .attr('d', (d) => { return d })
-    .attr('transform', `translate(${originX},${originY}) rotate(90)`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y}) rotate(90)`)
     .attr('fill', 'none')
     .attr('class', 'arc-path')
     .attr('stroke', 'green')
@@ -262,7 +262,7 @@ svg.append('circle')
     .attr('cy', () => radius * Math.sin(endAngle))
     .attr('r', '6px')
     .attr('class', 'ray-point')
-    .attr('transform', `translate(${originX},${originY})`)
+    .attr('transform', `translate(${ORIGIN_X},${ORIGIN_Y})`)
     .call(dragCircle)
 
 // Theta
