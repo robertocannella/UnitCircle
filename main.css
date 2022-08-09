@@ -1,32 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+html, body{
+    font-family: 'Roboto', sans-serif;
+    overflow:hidden;
+    box-sizing: border-box;
+    background-color: rgb(1, 1, 1);
+    color:rgb(255, 255, 255)
+}
 svg {
- 
-    background-color: antiquewhite;
+    margin:auto;
+    background-color: rgb(28, 27, 27);
     border: 2px;
+}
+h1 {
+    text-align: center;
 }
 #canvas {
     text-align: center;
 }
+.x-positive-axis,
+.x-negative-axis,
+.y-positive-axis,
+.y-negative-axis {
+    color: aqua;
 
-.x-axis {
+
+}
+.x-axis,
+.y-axis {
     font-weight: bold;
 }
 
-.ray {
-    stroke: green;
+.theta {
+    color: floralwhite;
+}
+.hypotenuse {
+    stroke: rgb(230, 4, 255);
 }
 .sine {
-    stroke: red;
+    stroke: rgb(3, 240, 43);
 }
 .cosine {
-    stroke: blue;
+    stroke: rgb(0, 81, 255);
+}
+.tangent {
+    stroke:rgb(255, 196, 18)
+}
+.cotangent {
+    stroke:rgb(219, 255, 18)
 }
 .ray-point {
     cursor: pointer;
     stroke: green;
     fill: green;
 }
-.test-point {
+.arc-path {
     cursor: pointer;
-    stroke: grey;
-    fill: grey;
+    stroke: rgb(255, 255, 255);
+    opacity: .2;
+    fill: rgb(102, 102, 252);
+}
+
+
+/*
+*   Slider configuration
+*/
+input {
+    margin: auto;
+}
+.slidecontainer {
+    margin: auto;
+    width: min(100vw, 350px);
+    text-align: center;
+  }
+  
+  .slider {
+    -webkit-appearance: none;
+    width: 90%;
+    height: 25px;
+    background: #ed23ff;
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+.slider:hover {
+    opacity: 1;
+  }
+  
+.slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 10px;
+height: 25px;
+border-radius: 50%;
+background: black;
+cursor: pointer;
+}
+  
+.slider::-moz-range-thumb {
+width: 10px;
+height: 25px;
+background: black;
+cursor: pointer;
 }

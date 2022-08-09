@@ -205,7 +205,6 @@ const cosine = [
     [mappedX, mappedY],
     [0, mappedY]
 ];
-
 const tan = [
     [mappedX, mappedY],
     [tangent, 0]
